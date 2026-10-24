@@ -103,6 +103,7 @@ This is a **pattern**, not a literal template. Names are placeholders. The actua
         doc-map.md                  # Index: what exists and where to find it
         standard-work-procedures.md # Project conventions and processes
         changelog.md                # Modification history — updated on git commit only
+        changelog.html              # Generated static mirror of changelog.md — regenerate, never hand-edit
         /architecture               # System-wide view
             architecture-overview.md
             architecture-diagram.png
@@ -172,6 +173,15 @@ Lives at the project root. The "welcome" document — the first thing anyone rea
 - **EndpointName:** Why it is deprecated and when it will be removed.
 ```
 
+**HTML mirror — regenerate on every update.** `docs/changelog.md` has a static, offline,
+all-history HTML companion at `docs/changelog.html` — a "news blog" rendering of the exact
+same content, newest first, browsable with no tooling. It is generated, never hand-edited.
+**Whenever `changelog.md` changes, run `python3 scripts/generate_changelog_html.py` in the
+same commit** — a changelog update without a regenerated `changelog.html` is incomplete,
+the same as a stale spec. Full format rules, the visual system (shared with the `repo-pulse`
+skill's reporting artifacts), and the generator's known gotchas:
+`references/changelog-html-template.md`.
+
 ## Reference Files
 
 ### Feature Spec → `references/feature-spec-template.md`
@@ -182,6 +192,9 @@ Template + worked example (`auth-test.md`) for test docs. Every test doc must co
 
 ### doc-map.md → `references/doc-map-template.md`
 Template + worked example for the documentation index. Use when creating or heavily updating `doc-map.md`. Every file in `/docs` must appear here; planning specs must not.
+
+### changelog.html → `references/changelog-html-template.md`
+Format rules + visual system for the static, all-history HTML mirror of `changelog.md`. Read before touching `scripts/generate_changelog_html.py` or if `docs/changelog.html` ever needs to be understood/debugged without just re-running the generator.
 
 ### standard-work-procedures.md → `references/standard-work-procedures-template.md`
 Template + worked example for the team's standard procedures document. Use when running `/standard`. Sections: development lifecycle, branching strategy, commit format, code review standards, testing & QA, documentation obligations, deployment process, Definition of Done.
